@@ -1,13 +1,13 @@
 # Target labels
  picotls-cli
 # Source files and their labels
-/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli
-/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli-complete.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-install.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-mkdir.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-download.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-update.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-patch.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-configure.rule
-/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-build.rule
+/home/magic/h2o-mphttp/CMakeFiles/picotls-cli
+/home/magic/h2o-mphttp/CMakeFiles/picotls-cli.rule
+/home/magic/h2o-mphttp/CMakeFiles/picotls-cli-complete.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-install.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-mkdir.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-download.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-update.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-patch.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-configure.rule
+/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-build.rule

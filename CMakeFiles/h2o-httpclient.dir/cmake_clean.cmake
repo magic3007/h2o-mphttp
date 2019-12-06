@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/h2o-httpclient.dir/src/httpclient.c.o"
-  "h2o-httpclient.pdb"
-  "h2o-httpclient"
+  "bin/h2o-httpclient.pdb"
+  "bin/h2o-httpclient"
 )
 
 # Per-language clean rules from dependency scanning.

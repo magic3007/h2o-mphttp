@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli"
+			"file" : "/home/magic/h2o-mphttp/CMakeFiles/picotls-cli"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli.rule"
+			"file" : "/home/magic/h2o-mphttp/CMakeFiles/picotls-cli.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli-complete.rule"
+			"file" : "/home/magic/h2o-mphttp/CMakeFiles/picotls-cli-complete.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-install.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-install.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-mkdir.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-mkdir.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-download.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-download.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-update.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-update.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-patch.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-patch.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-configure.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-configure.rule"
 		},
 		{
-			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-build.rule"
+			"file" : "/home/magic/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-build.rule"
 		}
 	],
 	"target" : 

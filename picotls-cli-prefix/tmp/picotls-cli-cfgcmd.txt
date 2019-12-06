@@ -1,1 +1,1 @@
-cmd='/usr/bin/cmake;-DOPENSSL_ROOT_DIR=/usr;/mnt/d/Desktop/Desktop/h2o-mphttp/deps/picotls'
+cmd='/usr/bin/cmake;-DOPENSSL_ROOT_DIR=/usr;/home/magic/h2o-mphttp/deps/picotls'

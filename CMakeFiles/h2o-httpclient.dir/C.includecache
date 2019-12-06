@@ -1,4 +1,4 @@
-#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
 
 #IncludeRegexScan: ^.*$
 
@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/mnt/d/Desktop/Desktop/h2o-mphttp/src/httpclient.c
+/home/magic/h2o-mphttp/src/httpclient.c
 errno.h
 -
 getopt.h
@@ -20,13 +20,13 @@ stdlib.h
 unistd.h
 -
 picotls.h
-/mnt/d/Desktop/Desktop/h2o-mphttp/src/picotls.h
+/home/magic/h2o-mphttp/src/picotls.h
 picotls/openssl.h
-/mnt/d/Desktop/Desktop/h2o-mphttp/src/picotls/openssl.h
+/home/magic/h2o-mphttp/src/picotls/openssl.h
 quicly.h
-/mnt/d/Desktop/Desktop/h2o-mphttp/src/quicly.h
+/home/magic/h2o-mphttp/src/quicly.h
 h2o.h
-/mnt/d/Desktop/Desktop/h2o-mphttp/src/h2o.h
+/home/magic/h2o-mphttp/src/h2o.h
 
 deps/picotls/include/picotls.h
 wincompat.h
