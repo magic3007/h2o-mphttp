@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/CMakeFiles/picotls-cli-complete.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-install.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-mkdir.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-download.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-update.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-patch.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-configure.rule"
+		},
+		{
+			"file" : "/mnt/d/Desktop/Desktop/h2o-mphttp/picotls-cli-prefix/src/picotls-cli-stamp/picotls-cli-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"picotls-cli"
+		],
+		"name" : "picotls-cli"
+	}
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData">
+    <serverData>
+      <paths name="WSL ubuntu18.04 (44e49e52-d173-44f5-9ed6-10df564d4538)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="baiduyun (magic) (a61dbf91-3847-4863-a0d7-e5dd47d7cbfc)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/magic/h2o-mphttp" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-baiduyun-root" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-baiduyun-magic" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-baiduyun-magic" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="baiduyun (root) (a240a6bf-2cb4-45cc-ab94-913a3608ed41)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/tmp.r0hut1fyp2" local="$PROJECT_DIR$" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-baiduyun-root" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-baiduyun-root" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-wsl-ubuntu1804" />
+            <excludedPath local="true" path="$PROJECT_DIR$/cmake-build-debug-baiduyun-magic" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+      <paths name="sc1.pkusc.org (33535934-33c7-41a1-8a4a-1242eeef40dd)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
