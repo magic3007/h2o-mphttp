@@ -17,3 +17,4 @@ tmp/
 /doc/workdir/
 include/h2o/gitrev.h
 .idea
+/fuzz
