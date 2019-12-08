@@ -229,13 +229,13 @@ LIBUV_INCLUDE_DIR:PATH=LIBUV_INCLUDE_DIR-NOTFOUND
 LIBUV_LIBRARIES:FILEPATH=LIBUV_LIBRARIES-NOTFOUND
 
 //Path to a library.
-OPENSSL_CRYPTO_LIBRARY:FILEPATH=/usr/lib/i386-linux-gnu/libcrypto.so
+OPENSSL_CRYPTO_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libcrypto.so
 
 //Path to a file.
 OPENSSL_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a library.
-OPENSSL_SSL_LIBRARY:FILEPATH=/usr/lib/i386-linux-gnu/libssl.so
+OPENSSL_SSL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libssl.so
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=PKG_CONFIG_EXECUTABLE-NOTFOUND
@@ -268,7 +268,7 @@ ZLIB_INCLUDE_DIR:PATH=/usr/include
 ZLIB_LIBRARY_DEBUG:FILEPATH=ZLIB_LIBRARY_DEBUG-NOTFOUND
 
 //Path to a library.
-ZLIB_LIBRARY_RELEASE:FILEPATH=/usr/lib/i386-linux-gnu/libz.so
+ZLIB_LIBRARY_RELEASE:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
 
 //Value Computed by CMake
 h2o_BINARY_DIR:STATIC=/home/magic/h2o-mphttp
@@ -277,10 +277,10 @@ h2o_BINARY_DIR:STATIC=/home/magic/h2o-mphttp
 h2o_SOURCE_DIR:STATIC=/home/magic/h2o-mphttp
 
 //Dependencies for the target
-libh2o-evloop_LIB_DEPENDS:STATIC=general;/usr/lib/i386-linux-gnu/libz.so;general;m;general;-lpthread;general;/usr/lib/i386-linux-gnu/libssl.so;general;/usr/lib/i386-linux-gnu/libcrypto.so;general;dl;
+libh2o-evloop_LIB_DEPENDS:STATIC=general;/usr/lib/x86_64-linux-gnu/libz.so;general;m;general;-lpthread;general;/usr/lib/x86_64-linux-gnu/libssl.so;general;/usr/lib/x86_64-linux-gnu/libcrypto.so;general;dl;
 
 //Dependencies for the target
-libh2o_LIB_DEPENDS:STATIC=general;-luv;general;/usr/lib/i386-linux-gnu/libz.so;general;m;general;-lpthread;general;/usr/lib/i386-linux-gnu/libssl.so;general;/usr/lib/i386-linux-gnu/libcrypto.so;general;dl;
+libh2o_LIB_DEPENDS:STATIC=general;-luv;general;/usr/lib/x86_64-linux-gnu/libz.so;general;m;general;-lpthread;general;/usr/lib/x86_64-linux-gnu/libssl.so;general;/usr/lib/x86_64-linux-gnu/libcrypto.so;general;dl;
 
 
 ########################
@@ -453,11 +453,11 @@ CMAKE_UNAME:INTERNAL=/bin/uname
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding OpenSSL
-FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/i386-linux-gnu/libssl.so;/usr/lib/i386-linux-gnu/libcrypto.so][/usr/include][v1.0.2g()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenSSL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libssl.so;/usr/lib/x86_64-linux-gnu/libcrypto.so][/usr/include][v1.0.2g()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Details about finding ZLIB
-FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[/usr/lib/i386-linux-gnu/libz.so][/usr/include][v1.2.8()]
+FIND_PACKAGE_MESSAGE_DETAILS_ZLIB:INTERNAL=[/usr/lib/x86_64-linux-gnu/libz.so][/usr/include][v1.2.8()]
 //Test HAS_PTHREAD_SETAFFINITY_NP
 HAS_PTHREAD_SETAFFINITY_NP:INTERNAL=1
 //Test LIBC_HAS_BACKTRACE

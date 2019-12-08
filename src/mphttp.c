@@ -3,9 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <h2o/httpclient.h>
+#include <h2o/mphttp2client.h>
 #include "picotls/openssl.h"
 #include "h2o.h"
-#include "h2o/mphttp2client.h"
 
 #define IO_TIMEOUT 10 * 1000 /* 10s */
 
@@ -17,9 +17,28 @@ static void usage(const char *progname){
 
 static h2o_mphttp2client_t *interface[3];
 
+h2o_mphttp2client_t *get_slowest_interface(h2o_mphttp2client_t *mp_idle){
+    h2o_mphttp2client_t *rv = NULL;
+    for(int i = 0; i < 3; i++)if(interface[i] != mp_idle && h2o_mpclient_get_remain(interface[i])>0) {
+            if (rv == NULL || h2o_mpclient_get_remain_time(rv) < h2o_mpclient_get_remain_time(interface[i]))
+                rv = interface[i];
+        }
+    return rv;
+}
+
 int on_get_size(){
-    printf("on_get_size!");
+    h2o_mpclient_reschedule(interface[1]);
+    h2o_mpclient_reschedule(interface[2]);
     return 0;
+}
+
+
+int is_complete(){
+    for(int i = 0; i < 3; i++){
+        if(interface[i]->rangeclients.running || interface[i]->rangeclients.pending)
+            return 0;
+    }
+    return 1;
 }
 
 int main(int argc, char **argv){
@@ -79,7 +98,13 @@ int main(int argc, char **argv){
     h2o_multithread_register_receiver(queue, ctx.getaddr_receiver, h2o_hostinfo_getaddr_receiver);
 
     for(int i = 0; i < 3; i++)
-        interface[i] = h2o_mpclient_create(cdns[i], &ctx, on_get_size, /* ssl_verify_none */1);
-    
+        interface[i] = h2o_mpclient_create(cdns[i], &ctx, on_get_size, get_slowest_interface, /* ssl_verify_none */1);
+
+    h2o_mpclient_fetch(interface[0], path_of_url, save_to_file, 0, 0);
+
+    while(!is_complete()){
+        h2o_evloop_run(ctx.loop, 1000);
+    }
+
     return 0;
 }

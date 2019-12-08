@@ -9,7 +9,7 @@
 static h2o_iovec_t range_str=(h2o_iovec_t){H2O_STRLIT("range")};
 
 size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra){
-   return ra->bw_sampler->bw;
+   return ra->bw_sampler.bw;
 }
 
 uint64_t h2o_rangeclient_get_rtt(h2o_rangeclient_t *ra){
@@ -25,7 +25,7 @@ uint32_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra){
     uint64_t bw = h2o_rangeclient_get_bw(ra); // Bytes/s
     if(bw == 0)
         return UINT32_MAX;
-    size_t remain = h2o_rangeclient_get_remain(ra); // ms
+    size_t remain = h2o_rangeclient_get_remain(ra); // Byte
     return (uint64_t)remain * 1000 / bw;
 }
 
@@ -77,22 +77,26 @@ static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *
 }
 
 
-static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler, size_t n_bytes, uint32_t now_ms){
+static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler, size_t received, uint32_t now_ms){
     if(bw_sampler->last_receive_time == 0){
         bw_sampler->last_receive_time = now_ms;
+        bw_sampler->last_receive = received;
         return;
     }
-    uint64_t time_interval = (now_ms - bw_sampler->last_receive_time);
+    uint64_t time_interval = now_ms - bw_sampler->last_receive_time;
+    size_t nbytes = received - bw_sampler->last_receive;
+
     if(time_interval == 0)
         return;
 
-    uint64_t sample = n_bytes * 1000 / time_interval; // B/s
+    uint64_t sample = nbytes * 1000 / time_interval; // Byte/s
     if(bw_sampler->bw == 0)
         bw_sampler->bw = sample;
     else
         bw_sampler->bw = 0.9 * bw_sampler->bw + 0.1 * sample;
 
     bw_sampler->last_receive_time = now_ms;
+    bw_sampler->last_receive = received;
 }
 
 static void cancel_stream_cb(h2o_timer_t *timer) {
@@ -229,6 +233,9 @@ h2o_rangeclient_create(
 
     ra->ctx = ctx;
     ra->data = data;
+
+    ra->save_to_file = h2o_mem_alloc(strlen(save_to_file) + 1);
+    memcpy(ra->save_to_file, save_to_file, strlen(save_to_file));
 
     ra->range.begin = bytes_begin;
     ra->range.end = bytes_end;

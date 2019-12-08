@@ -1,9 +1,9 @@
 #ifndef H2O_RANGECLIENT_H
 #define H2O_RANGECLIENT_H
 
-//#ifdef __cplusplus
-//extern "C" {
-//#endif
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define DEFAULT_RANGECLIENT_BUF_SIZE 256
 
@@ -16,7 +16,8 @@ typedef int (*on_complete_cb_t)(h2o_rangeclient_t *);
 
 struct st_bandwidth_sampler_t{
     uint64_t last_receive_time;
-    uint64_t bw;
+    size_t last_receive;
+    uint64_t bw; // including rtt
 };
 
 struct st_h2o_rangeclient_t{
@@ -27,6 +28,7 @@ struct st_h2o_rangeclient_t{
     h2o_httpclient_ctx_t *ctx;
     void *data;
     h2o_url_t *url_parsed;
+    char *save_to_file;
 
     struct{
         size_t begin;
@@ -38,7 +40,7 @@ struct st_h2o_rangeclient_t{
     char *buf;
     h2o_header_t *range_header;
     h2o_timer_t cancel_timer;
-    bandwidth_sampler_t bw_sampler;
+    bandwidth_sample_t bw_sampler;
 
     int is_closed;
 
@@ -57,13 +59,16 @@ h2o_rangeclient_t *h2o_rangeclient_create(
         size_t bytes_begin,
         size_t bytes_end
         );
+void h2o_rangeclient_destroy(h2o_rangeclient_t *ra);
+
+void h2o_rangeclient_adjust_range_end(h2o_rangeclient_t *ra, size_t end);
 
 size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra); // Bytes/s
 uint64_t h2o_rangeclient_get_rtt(h2o_rangeclient_t *ra); // us
 size_t h2o_rangeclient_get_remain(h2o_rangeclient_t *ra); // Bytes
-uint32_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra);
+uint32_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra); // ms
 
-//#ifdef __cplusplus
-//}
-//#endif
+#ifdef __cplusplus
+}
+#endif
 #endif //H2O_RANGECLIENT_H
