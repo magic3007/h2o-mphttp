@@ -9,8 +9,15 @@
 
 #include "h2o/httpclient.h"
 typedef struct st_h2o_rangeclient_t h2o_rangeclient_t;
+typedef struct st_bandwidth_sampler_t bandwidth_sample_t;
 
 typedef int (*on_get_size_cb_t)();
+typedef int (*on_complete_cb_t)(h2o_rangeclient_t *);
+
+struct st_bandwidth_sampler_t{
+    uint64_t last_receive_time;
+    uint64_t bw;
+};
 
 struct st_h2o_rangeclient_t{
     h2o_httpclient_t *httpclient;
@@ -30,8 +37,13 @@ struct st_h2o_rangeclient_t{
     int fd;
     char *buf;
     h2o_header_t *range_header;
+    h2o_timer_t cancel_timer;
+    bandwidth_sampler_t bw_sampler;
+
+    int is_closed;
 
     struct{
+        on_complete_cb_t on_complete;
         on_get_size_cb_t on_get_size;
     }cb;
 };
@@ -46,8 +58,10 @@ h2o_rangeclient_t *h2o_rangeclient_create(
         size_t bytes_end
         );
 
-size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra);
-
+size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra); // Bytes/s
+uint64_t h2o_rangeclient_get_rtt(h2o_rangeclient_t *ra); // us
+size_t h2o_rangeclient_get_remain(h2o_rangeclient_t *ra); // Bytes
+uint32_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra);
 
 //#ifdef __cplusplus
 //}

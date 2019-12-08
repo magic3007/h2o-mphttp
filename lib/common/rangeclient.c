@@ -8,9 +8,35 @@
  */
 static h2o_iovec_t range_str=(h2o_iovec_t){H2O_STRLIT("range")};
 
-
 size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra){
-    return -1;
+   return ra->bw_sampler->bw;
+}
+
+uint64_t h2o_rangeclient_get_rtt(h2o_rangeclient_t *ra){
+    return h2o_httpclient_get_ping_rtt(ra->httpclient);
+}
+
+size_t h2o_rangeclient_get_remain(h2o_rangeclient_t *ra){
+    return ra->range.end == 0 ? 0
+        : ra->range.end - ra->range.begin - ra->range.received;
+}
+
+uint32_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra){
+    uint64_t bw = h2o_rangeclient_get_bw(ra); // Bytes/s
+    if(bw == 0)
+        return UINT32_MAX;
+    size_t remain = h2o_rangeclient_get_remain(ra); // ms
+    return (uint64_t)remain * 1000 / bw;
+}
+
+void h2o_rangeclient_adjust_range_end(h2o_rangeclient_t *ra, size_t end) {
+  assert(end > ra->range.begin);
+  if (end < ra->range.begin + ra->range.received) {
+    h2o_error_printf("warning: overwrite existing content. cancel the stream now\n");
+    h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
+  } else {
+      ra->range.end = end;
+  }
 }
 
 static void print_status_line(int version, int status, h2o_iovec_t msg){
@@ -26,8 +52,76 @@ static void print_status_line(int version, int status, h2o_iovec_t msg){
     }
 }
 
-static int on_body(h2o_httpclient_t *client, const char *errstr){
 
+static int writen(int fd, void *ptr, size_t n){
+    size_t cur = 0;
+    int rv;
+    while((rv = write(fd, ptr + cur, n - cur))){
+        if(rv < 0) return rv;
+        cur += rv;
+    }
+    assert(cur == n);
+    return cur;
+}
+
+static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *inbuf){
+    size_t remain = h2o_rangeclient_get_remain(ra);
+    size_t consume = inbuf->size;
+    int cancel = consume >= remain;
+    if(cancel) consume = remain;
+    if(writen(ra->fd, inbuf->bytes, consume)<0)
+        h2o_fatal("writen error: %s", strerror(errno));
+    ra->range.begin += consume;
+    if(cancel && !h2o_timer_is_linked(&ra->cancel_timer))
+        h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
+}
+
+
+static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler, size_t n_bytes, uint32_t now_ms){
+    if(bw_sampler->last_receive_time == 0){
+        bw_sampler->last_receive_time = now_ms;
+        return;
+    }
+    uint64_t time_interval = (now_ms - bw_sampler->last_receive_time);
+    if(time_interval == 0)
+        return;
+
+    uint64_t sample = n_bytes * 1000 / time_interval; // B/s
+    if(bw_sampler->bw == 0)
+        bw_sampler->bw = sample;
+    else
+        bw_sampler->bw = 0.9 * bw_sampler->bw + 0.1 * sample;
+
+    bw_sampler->last_receive_time = now_ms;
+}
+
+static void cancel_stream_cb(h2o_timer_t *timer) {
+  h2o_rangeclient_t *client = H2O_STRUCT_FROM_MEMBER(h2o_rangeclient_t, cancel_timer, timer);
+  client->httpclient->cancel(client->httpclient);
+  close(client->fd);
+  client->is_closed = 1;
+  client->cb.on_complete(client);
+}
+
+static int on_body(h2o_httpclient_t *httpclient, const char *errstr){
+
+    if (errstr != NULL && errstr != h2o_httpclient_error_is_eos) {
+        h2o_error_printf("Eroor in on_body: %s\n", errstr);
+        return -1;
+    }
+
+    h2o_rangeclient_t *ra = httpclient->data;
+    h2o_rangeclient_buffer_consume(ra, *httpclient->buf);
+    h2o_rangeclient_bandwidth_update(&ra->bw_sampler, (*httpclient->buf)->size, /* ms */h2o_now(ra->ctx->loop));
+    h2o_buffer_consume(&(*httpclient->buf), (*httpclient->buf)->size);
+
+    if (errstr == h2o_httpclient_error_is_eos) {
+        printf("done!\n");
+        close(ra->fd);
+        ra->is_closed = 1;
+        ra->cb.on_complete(ra);
+  }
+    return 0;
 }
 
 static int parse_range_header(h2o_header_t *headers, size_t num_headers, size_t *file_size){
@@ -163,6 +257,15 @@ h2o_rangeclient_create(
 
     ra->buf = h2o_mem_alloc_pool(ra->pool, char, DEFAULT_RANGECLIENT_BUF_SIZE);
 
+    h2o_timer_init(&ra->cancel_timer, cancel_stream_cb);
+
+    ra->is_closed = 0;
     h2o_httpclient_connect(&ra->httpclient, ra->pool, ra, ctx, connpool, target, on_connect);
     return ra;
+}
+
+void h2o_rangeclient_destroy(h2o_rangeclient_t *ra) {
+  h2o_mem_clear_pool(ra->pool);
+  free(ra->pool);
+  free(ra);
 }

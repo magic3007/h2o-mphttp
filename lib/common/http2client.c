@@ -64,7 +64,7 @@ struct st_h2o_http2client_conn_t {
     uint32_t ping_bucket_size;
     struct timeval *ping_bucket;
     h2o_timer_t ping_timeout;
-    uint64_t ping_rtt; // in microsecond
+    uint64_t ping_rtt; // in us
     uint8_t ping_counter;
 
     struct {
@@ -190,9 +190,9 @@ static uint32_t get_max_buffer_size(h2o_httpclient_ctx_t *ctx)
     return (uint32_t)sz;
 }
 
-uint64_t h2o_httpclient__h2_get_ping_rtt(h2o_httpclient__h2_conn_t *_conn){
-    struct st_h2o_http2client_conn_t *conn = (void *)_conn;
-    return conn->ping_rtt;
+uint64_t h2o_httpclient_get_ping_rtt(h2o_httpclient_t *_conn){
+    struct st_h2o_http2client_stream_t *stream = (void*) _conn;
+    return stream->conn->ping_rtt;
 }
 
 uint32_t h2o_httpclient__h2_get_max_concurrent_streams(h2o_httpclient__h2_conn_t *_conn)
@@ -664,7 +664,7 @@ static int calc_ping_rtt(struct st_h2o_http2client_conn_t *conn, struct timeval 
     h2o_loop_t *loop = conn->super.ctx->loop;
     current_time = h2o_gettimeofday(loop);
     timersub(&current_time, send_time, &rtt_time);
-    rtt = (uint64_t)rtt_time.tv_sec * 1000000 + rtt_time.tv_usec;
+    rtt = (uint64_t)rtt_time.tv_sec * 1000000 + rtt_time.tv_usec; // us
     if(conn->ping_rtt == 0)
         conn->ping_rtt = rtt;
     else
