@@ -190,7 +190,7 @@ static uint32_t get_max_buffer_size(h2o_httpclient_ctx_t *ctx)
     return (uint32_t)sz;
 }
 
-uint64_t h2o_jttpclient__h2_get_ping_rtt(h2o_httpclient__h2_conn_t *_conn){
+uint64_t h2o_httpclient__h2_get_ping_rtt(h2o_httpclient__h2_conn_t *_conn){
     struct st_h2o_http2client_conn_t *conn = (void *)_conn;
     return conn->ping_rtt;
 }
@@ -659,7 +659,6 @@ static int handle_push_promise_frame(struct st_h2o_http2client_conn_t *conn, h2o
 }
 
 static int calc_ping_rtt(struct st_h2o_http2client_conn_t *conn, struct timeval *send_time, const char **err_desc){
-    int rv;
     struct timeval current_time, rtt_time;
     uint64_t rtt;
     h2o_loop_t *loop = conn->super.ctx->loop;
@@ -669,7 +668,7 @@ static int calc_ping_rtt(struct st_h2o_http2client_conn_t *conn, struct timeval 
     if(conn->ping_rtt == 0)
         conn->ping_rtt = rtt;
     else
-        conn->ping_rtt = 0.9 * conn->ping_rtt + 0.1 * rtt;
+        conn->ping_rtt = 0.8 * conn->ping_rtt + 0.2 * rtt;
     return 0;
 }
 
@@ -1188,6 +1187,7 @@ static void emit_writereq(h2o_timer_t *entry)
 static struct st_h2o_http2client_conn_t *create_connection(h2o_httpclient_ctx_t *ctx, h2o_socket_t *sock, h2o_url_t *origin_url,
                                                            h2o_httpclient_connection_pool_t *connpool)
 {
+    fprintf(stderr, "lalala\n");
     struct st_h2o_http2client_conn_t *conn = h2o_mem_alloc(sizeof(*conn));
     memset(conn, 0, sizeof(*conn));
     conn->super.ctx = ctx;
@@ -1301,6 +1301,11 @@ static int do_write_req(h2o_httpclient_t *_client, h2o_iovec_t chunk, int is_end
     return 0;
 }
 
+static uint64_t do_get_rtt(h2o_httpclient_t *_client){
+    struct st_h2o_http2client_stream_t *stream = (void *)_client;
+    return stream->conn->ping_rtt;
+}
+
 static void setup_stream(struct st_h2o_http2client_stream_t *stream)
 {
     memset(&stream->conn, 0, sizeof(*stream) - offsetof(struct st_h2o_http2client_stream_t, conn));
@@ -1315,6 +1320,7 @@ static void setup_stream(struct st_h2o_http2client_stream_t *stream)
     stream->super.get_socket = do_get_socket;
     stream->super.update_window = do_update_window;
     stream->super.write_req = do_write_req;
+    stream->super.get_rtt = do_get_rtt;
 }
 
 void h2o_httpclient__h2_on_connect(h2o_httpclient_t *_client, h2o_socket_t *sock, h2o_url_t *origin)

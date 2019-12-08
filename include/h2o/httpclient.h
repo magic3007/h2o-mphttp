@@ -212,6 +212,8 @@ struct st_h2o_httpclient_t {
      */
     int (*write_req)(h2o_httpclient_t *client, h2o_iovec_t chunk, int is_end_stream);
 
+    uint64_t (*get_rtt)(h2o_httpclient_t *client);
+
     h2o_timer_t _timeout;
     h2o_socketpool_connect_request_t *_connect_req;
     union {
@@ -276,6 +278,7 @@ void h2o_httpclient__h1_on_connect(h2o_httpclient_t *client, h2o_socket_t *sock,
 extern const size_t h2o_httpclient__h1_size;
 
 void h2o_httpclient__h2_on_connect(h2o_httpclient_t *client, h2o_socket_t *sock, h2o_url_t *origin);
+uint64_t h2o_httpclient__h2_get_ping_rtt(h2o_httpclient__h2_conn_t *_conn);
 uint32_t h2o_httpclient__h2_get_max_concurrent_streams(h2o_httpclient__h2_conn_t *conn);
 extern const size_t h2o_httpclient__h2_size;
 

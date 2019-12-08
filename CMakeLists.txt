@@ -334,6 +334,8 @@ SET(LIB_SOURCE_FILES
     lib/common/http2client.c
     lib/common/http3client.c
     lib/common/httpclient.c
+    lib/common/mphttp2client.c
+    lib/common/rangeclient.c
     lib/common/memcached.c
     lib/common/memory.c
     lib/common/multithread.c
@@ -588,6 +590,7 @@ set_target_properties(h2o-httpclient PROPERTIES
 
 SET_TARGET_PROPERTIES(h2o-mphttp PROPERTIES
     COMPILE_FLAGS "-DH2O_USE_LIBUV=0")
+TARGET_LINK_LIBRARIES(h2o-mphttp libh2o-evloop ${EXTRA_LIBS})
 set_target_properties(h2o-mphttp PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 

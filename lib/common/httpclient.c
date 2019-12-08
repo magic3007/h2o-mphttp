@@ -91,6 +91,7 @@ static h2o_httpclient_t *create_client(h2o_mem_pool_t *pool, void *data, h2o_htt
     client->get_socket = NULL;
     client->update_window = NULL;
     client->write_req = NULL;
+    client->get_rtt = NULL;
     client->_cb.on_connect = on_connect;
     client->_timeout.cb = on_connect_timeout;
 

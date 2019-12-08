@@ -17,11 +17,11 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="list_install_components">
+      <Target title="install">
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 list_install_components" />
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 install" />
             <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
@@ -37,11 +37,11 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="install">
+      <Target title="list_install_components">
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 install" />
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 list_install_components" />
             <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
@@ -57,16 +57,6 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="install/local">
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option type="4" />
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 install/local" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
       <Target title="check-valgrind">
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option type="4" />
@@ -77,11 +67,111 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="doc-publish">
+      <Target title="picotls-cli">
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 doc-publish" />
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 picotls-cli" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="install/local">
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 install/local" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="h2o-httpclient">
+         <Option output="/home/magic/h2o-mphttp/bin/h2o-httpclient" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DLIBC_HAS_BACKTRACE" />
+            <Add directory="/home/magic/h2o-mphttp" />
+            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
+            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
+            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
+            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
+            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
+            <Add directory="/home/magic/h2o-mphttp/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-httpclient" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="h2o-httpclient/fast">
+         <Option output="/home/magic/h2o-mphttp/bin/h2o-httpclient" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DLIBC_HAS_BACKTRACE" />
+            <Add directory="/home/magic/h2o-mphttp" />
+            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
+            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
+            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
+            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
+            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
+            <Add directory="/home/magic/h2o-mphttp/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-httpclient/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="check">
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 check" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="edit_cache">
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 edit_cache" />
             <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
@@ -227,166 +317,6 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="doc-clean">
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option type="4" />
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 doc-clean" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="h2o">
-         <Option output="/home/magic/h2o-mphttp/h2o" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option object_output="./" />
-         <Option type="1" />
-         <Option compiler="gcc" />
-         <Compiler>
-            <Add option="-DLIBC_HAS_BACKTRACE" />
-            <Add directory="/home/magic/h2o-mphttp" />
-            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
-            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
-            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
-            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
-            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
-            <Add directory="/home/magic/h2o-mphttp/include" />
-         </Compiler>
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="h2o/fast">
-         <Option output="/home/magic/h2o-mphttp/h2o" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option object_output="./" />
-         <Option type="1" />
-         <Option compiler="gcc" />
-         <Compiler>
-            <Add option="-DLIBC_HAS_BACKTRACE" />
-            <Add directory="/home/magic/h2o-mphttp" />
-            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
-            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
-            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
-            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
-            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
-            <Add directory="/home/magic/h2o-mphttp/include" />
-         </Compiler>
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o/fast" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="picotls-cli">
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option type="4" />
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 picotls-cli" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="h2o-httpclient">
-         <Option output="/home/magic/h2o-mphttp/bin/h2o-httpclient" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option object_output="./" />
-         <Option type="1" />
-         <Option compiler="gcc" />
-         <Compiler>
-            <Add option="-DLIBC_HAS_BACKTRACE" />
-            <Add directory="/home/magic/h2o-mphttp" />
-            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
-            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
-            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
-            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
-            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
-            <Add directory="/home/magic/h2o-mphttp/include" />
-         </Compiler>
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-httpclient" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="h2o-httpclient/fast">
-         <Option output="/home/magic/h2o-mphttp/bin/h2o-httpclient" prefix_auto="0" extension_auto="0" />
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option object_output="./" />
-         <Option type="1" />
-         <Option compiler="gcc" />
-         <Compiler>
-            <Add option="-DLIBC_HAS_BACKTRACE" />
-            <Add directory="/home/magic/h2o-mphttp" />
-            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
-            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
-            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
-            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
-            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
-            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
-            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
-            <Add directory="/home/magic/h2o-mphttp/include" />
-         </Compiler>
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-httpclient/fast" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
       <Target title="t-00unit-evloop.t">
          <Option output="/home/magic/h2o-mphttp/t-00unit-evloop.t" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/home/magic/h2o-mphttp" />
@@ -457,28 +387,18 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="check">
+      <Target title="doc-publish">
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option type="4" />
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 check" />
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 doc-publish" />
             <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="edit_cache">
-         <Option working_dir="/home/magic/h2o-mphttp" />
-         <Option type="4" />
-         <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 edit_cache" />
-            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
-            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
-         </MakeCommands>
-      </Target>
-      <Target title="t-qif">
-         <Option output="/home/magic/h2o-mphttp/t-qif" prefix_auto="0" extension_auto="0" />
+      <Target title="h2o">
+         <Option output="/home/magic/h2o-mphttp/h2o" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option object_output="./" />
          <Option type="1" />
@@ -506,14 +426,14 @@
             <Add directory="/home/magic/h2o-mphttp/include" />
          </Compiler>
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-qif" />
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o" />
             <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
-      <Target title="t-qif/fast">
-         <Option output="/home/magic/h2o-mphttp/t-qif" prefix_auto="0" extension_auto="0" />
+      <Target title="h2o/fast">
+         <Option output="/home/magic/h2o-mphttp/h2o" prefix_auto="0" extension_auto="0" />
          <Option working_dir="/home/magic/h2o-mphttp" />
          <Option object_output="./" />
          <Option type="1" />
@@ -541,7 +461,7 @@
             <Add directory="/home/magic/h2o-mphttp/include" />
          </Compiler>
          <MakeCommands>
-            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-qif/fast" />
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o/fast" />
             <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
             <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
@@ -627,278 +547,358 @@
             <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
          </MakeCommands>
       </Target>
+      <Target title="t-qif">
+         <Option output="/home/magic/h2o-mphttp/t-qif" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DLIBC_HAS_BACKTRACE" />
+            <Add directory="/home/magic/h2o-mphttp" />
+            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
+            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
+            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
+            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
+            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
+            <Add directory="/home/magic/h2o-mphttp/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-qif" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="t-qif/fast">
+         <Option output="/home/magic/h2o-mphttp/t-qif" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option object_output="./" />
+         <Option type="1" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DLIBC_HAS_BACKTRACE" />
+            <Add directory="/home/magic/h2o-mphttp" />
+            <Add directory="/home/magic/h2o-mphttp/deps/brotli/c/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/cloexec" />
+            <Add directory="/home/magic/h2o-mphttp/deps/golombset" />
+            <Add directory="/home/magic/h2o-mphttp/deps/hiredis" />
+            <Add directory="/home/magic/h2o-mphttp/deps/klib" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libgkc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/libyrmcds" />
+            <Add directory="/home/magic/h2o-mphttp/deps/neverbleed" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picohttpparser" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotest" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/ext" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/deps/micro-ecc" />
+            <Add directory="/home/magic/h2o-mphttp/deps/picotls/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/quicly/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
+            <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
+            <Add directory="/home/magic/h2o-mphttp/include" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-qif/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="doc-clean">
+         <Option working_dir="/home/magic/h2o-mphttp" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 doc-clean" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
       </Build>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/common/dictionary.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/common/dictionary.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/backward_references.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/backward_references.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/backward_references_hq.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/backward_references_hq.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/bit_cost.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/bit_cost.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/block_splitter.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/block_splitter.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/brotli_bit_stream.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/brotli_bit_stream.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/cluster.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/cluster.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/compress_fragment.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/compress_fragment.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/compress_fragment_two_pass.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/compress_fragment_two_pass.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/dictionary_hash.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/dictionary_hash.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/encode.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/entropy_encode.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/entropy_encode.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/histogram.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/histogram.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/literal_cost.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/literal_cost.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/memory.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/memory.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/metablock.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/metablock.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/static_dict.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/static_dict.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/utf8_util.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/brotli/c/enc/utf8_util.h">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/cloexec/cloexec.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/cloexec/cloexec.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/async.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/async.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/hiredis.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/hiredis.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/net.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/net.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/read.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/read.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/sds.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/hiredis/sds.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libgkc/gkc.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libgkc/gkc.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/close.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/connect.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/recv.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/send.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/send_text.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/socket.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/strerror.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/libyrmcds/text_mode.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/neverbleed/neverbleed.c">
          <Option target="h2o"/>
@@ -909,14 +909,14 @@
       <Unit filename="/home/magic/h2o-mphttp/deps/picohttpparser/picohttpparser.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picohttpparser/picohttpparser.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotest/picotest.c">
          <Option target="t-00unit-evloop.t"/>
@@ -927,178 +927,178 @@
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/blockwise.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/blockwise.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/chash.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/chash.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/curve25519.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/curve25519.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/drbg.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/drbg.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/hmac.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/hmac.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/deps/cifra/src/sha256.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/lib/cifra/random.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/lib/cifra/x25519.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/lib/openssl.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/picotls/lib/picotls.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/cc-reno.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/defaults.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/frame.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/quicly.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/ranges.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/recvstate.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/sendstate.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/sentmap.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/quicly/lib/streambuf.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/api.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/dumper.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/emitter.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/loader.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/parser.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/reader.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/scanner.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/deps/yaml/src/writer.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/balancer/least_conn.c">
          <Option target="libh2o-evloop"/>
@@ -1118,14 +1118,14 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/common/file.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/filecache.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/hostinfo.c">
          <Option target="libh2o-evloop"/>
@@ -1135,20 +1135,20 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/common/http1client.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/http2client.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/http3client.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/httpclient.c">
          <Option target="libh2o-evloop"/>
@@ -1158,25 +1158,43 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/common/memcached.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/memory.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
+      </Unit>
+      <Unit filename="/home/magic/h2o-mphttp/lib/common/mphttp2client.c">
+         <Option target="libh2o-evloop"/>
+         <Option target="libh2o"/>
+         <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/multithread.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
          <Option target="h2o"/>
       </Unit>
+      <Unit filename="/home/magic/h2o-mphttp/lib/common/rangeclient.c">
+         <Option target="libh2o-evloop"/>
+         <Option target="libh2o"/>
+         <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
+      </Unit>
+      <Unit filename="/home/magic/h2o-mphttp/lib/common/rangeclient.h">
+         <Option target="libh2o-evloop"/>
+         <Option target="libh2o"/>
+         <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
+      </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/redis.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/serverutil.c">
          <Option target="libh2o-evloop"/>
@@ -1191,8 +1209,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/common/socketpool.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/string.c">
          <Option target="libh2o-evloop"/>
@@ -1212,8 +1230,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/common/token.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/url.c">
          <Option target="libh2o-evloop"/>
@@ -1223,20 +1241,20 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/core/config.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/core/configurator.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/core/context.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/core/headers.c">
          <Option target="libh2o-evloop"/>
@@ -1246,8 +1264,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/core/logconf.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/core/proxy.c">
          <Option target="libh2o-evloop"/>
@@ -1257,8 +1275,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/core/request.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/core/util.c">
          <Option target="libh2o-evloop"/>
@@ -1268,8 +1286,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/access_log.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/compress.c">
          <Option target="libh2o-evloop"/>
@@ -1277,8 +1295,8 @@
          <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/compress/brotli.c">
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/compress/gzip.c">
          <Option target="libh2o-evloop"/>
@@ -1288,104 +1306,104 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/access_log.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/compress.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/errordoc.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/expires.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/fastcgi.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/file.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/headers.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/headers_util.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/http2_debug_state.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/proxy.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/redirect.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/reproxy.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/server_timing.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/status.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/configurator/throttle_resp.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/errordoc.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/expires.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/fastcgi.c">
          <Option target="libh2o-evloop"/>
@@ -1405,14 +1423,14 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/headers_util.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/http2_debug_state.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/mimemap.c">
          <Option target="libh2o-evloop"/>
@@ -1422,8 +1440,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/proxy.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/redirect.c">
          <Option target="libh2o-evloop"/>
@@ -1433,56 +1451,56 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/reproxy.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/server_timing.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/status.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/status/durations.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/status/events.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/status/requests.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/status/ssl.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/handler/throttle_resp.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http1.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/cache_digests.c">
          <Option target="libh2o-evloop"/>
@@ -1497,14 +1515,14 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/connection.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/frame.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/hpack.c">
          <Option target="libh2o-evloop"/>
@@ -1514,8 +1532,8 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/http2_debug_state.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/scheduler.c">
          <Option target="libh2o-evloop"/>
@@ -1525,14 +1543,14 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/http2/stream.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http3/common.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/http3/frame.c">
          <Option target="libh2o-evloop"/>
@@ -1547,14 +1565,14 @@
       <Unit filename="/home/magic/h2o-mphttp/lib/http3/server.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/tunnel.c">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
-         <Option target="h2o"/>
          <Option target="t-00unit-evloop.t"/>
+         <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/src/httpclient.c">
          <Option target="h2o-httpclient"/>
