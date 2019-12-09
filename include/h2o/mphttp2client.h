@@ -17,8 +17,12 @@ struct st_h2o_mphttp2client_t{
     h2o_mem_pool_t *pool;
     h2o_httpclient_ctx_t *ctx;
     h2o_httpclient_connection_pool_t *connpool;
+    FILE *log_file;
     size_t url_len;
     char *request_url;
+    char *usrl_parsed_buf;
+    h2o_url_t url_parsed;
+    int ID;
 
     struct{
         h2o_rangeclient_t *running;
@@ -30,6 +34,7 @@ struct st_h2o_mphttp2client_t{
     on_get_size_cb_t  on_get_size_cb;
     on_reschedule_cb_t on_reschedule_cb;
 };
+
 
 h2o_mphttp2client_t *
 h2o_mpclient_create(char *host_address,

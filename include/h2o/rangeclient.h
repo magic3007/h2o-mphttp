@@ -13,6 +13,7 @@ typedef struct st_bandwidth_sampler_t bandwidth_sample_t;
 
 typedef int (*on_get_size_cb_t)();
 typedef int (*on_complete_cb_t)(h2o_rangeclient_t *);
+typedef void (*on_buffer_consume_cb_t)(void*, size_t, size_t);
 
 struct st_bandwidth_sampler_t{
     uint64_t last_receive_time;
@@ -47,6 +48,7 @@ struct st_h2o_rangeclient_t{
     struct{
         on_complete_cb_t on_complete;
         on_get_size_cb_t on_get_size;
+        on_buffer_consume_cb_t on_buffer_consume;
     }cb;
 };
 
@@ -57,7 +59,10 @@ h2o_rangeclient_t *h2o_rangeclient_create(
         char *save_to_file,
         h2o_url_t *target,
         size_t bytes_begin,
-        size_t bytes_end
+        size_t bytes_end,
+        on_complete_cb_t on_complete,
+        on_get_size_cb_t on_get_size,
+        on_buffer_consume_cb_t on_buffer_consume
         );
 void h2o_rangeclient_destroy(h2o_rangeclient_t *ra);
 

@@ -1185,9 +1185,7 @@ static void emit_writereq(h2o_timer_t *entry)
 }
 
 static struct st_h2o_http2client_conn_t *create_connection(h2o_httpclient_ctx_t *ctx, h2o_socket_t *sock, h2o_url_t *origin_url,
-                                                           h2o_httpclient_connection_pool_t *connpool)
-{
-    fprintf(stderr, "lalala\n");
+                                                           h2o_httpclient_connection_pool_t *connpool){
     struct st_h2o_http2client_conn_t *conn = h2o_mem_alloc(sizeof(*conn));
     memset(conn, 0, sizeof(*conn));
     conn->super.ctx = ctx;

@@ -114,6 +114,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-httpclient" />
@@ -149,6 +157,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-httpclient/fast" />
@@ -204,6 +220,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 libh2o-evloop" />
@@ -239,6 +263,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 libh2o-evloop/fast" />
@@ -274,6 +306,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 libh2o" />
@@ -309,6 +349,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 libh2o/fast" />
@@ -344,6 +392,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-00unit-evloop.t" />
@@ -379,6 +435,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-00unit-evloop.t/fast" />
@@ -424,6 +488,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o" />
@@ -459,6 +531,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o/fast" />
@@ -494,6 +574,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-mphttp" />
@@ -529,6 +617,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 h2o-mphttp/fast" />
@@ -574,6 +670,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-qif" />
@@ -609,6 +713,14 @@
             <Add directory="/home/magic/h2o-mphttp/deps/yaml/include" />
             <Add directory="/home/magic/h2o-mphttp/deps/yoml" />
             <Add directory="/home/magic/h2o-mphttp/include" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
          </Compiler>
          <MakeCommands>
             <Build command="/usr/bin/make -f &quot;/home/magic/h2o-mphttp/Makefile&quot;  VERBOSE=1 t-qif/fast" />
@@ -1179,12 +1291,6 @@
          <Option target="h2o"/>
       </Unit>
       <Unit filename="/home/magic/h2o-mphttp/lib/common/rangeclient.c">
-         <Option target="libh2o-evloop"/>
-         <Option target="libh2o"/>
-         <Option target="t-00unit-evloop.t"/>
-         <Option target="h2o"/>
-      </Unit>
-      <Unit filename="/home/magic/h2o-mphttp/lib/common/rangeclient.h">
          <Option target="libh2o-evloop"/>
          <Option target="libh2o"/>
          <Option target="t-00unit-evloop.t"/>

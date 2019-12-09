@@ -1,0 +1,17 @@
+user: root
+hosts:
+  "localhost":
+    listen:
+      port: 80
+    listen:
+      port: 443
+      ssl:
+        certificate-file: ./cert.pem
+        key-file: ./key.pem
+
+    paths:
+      "/":
+        file.dir: ./chunk
+access-log: ./access-log
+error-log: ./error-log
+#pid-file: ./pid-file

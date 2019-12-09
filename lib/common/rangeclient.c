@@ -3,10 +3,11 @@
 #include <zconf.h>
 
 /**
- * See the syntax of HTTP |range| header at
+ * See the syntax of HTTP |Range| header at
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Range
  */
 static h2o_iovec_t range_str=(h2o_iovec_t){H2O_STRLIT("range")};
+
 
 size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra){
    return ra->bw_sampler.bw;
@@ -71,6 +72,7 @@ static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *
     if(cancel) consume = remain;
     if(writen(ra->fd, inbuf->bytes, consume)<0)
         h2o_fatal("writen error: %s", strerror(errno));
+    ra->cb.on_buffer_consume(ra->data, ra->range.begin, ra->range.begin + consume -1);
     ra->range.begin += consume;
     if(cancel && !h2o_timer_is_linked(&ra->cancel_timer))
         h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
@@ -101,6 +103,7 @@ static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler, siz
 
 static void cancel_stream_cb(h2o_timer_t *timer) {
   h2o_rangeclient_t *client = H2O_STRUCT_FROM_MEMBER(h2o_rangeclient_t, cancel_timer, timer);
+  fprintf(stdout, "cancel_stream");
   client->httpclient->cancel(client->httpclient);
   close(client->fd);
   client->is_closed = 1;
@@ -133,7 +136,7 @@ static int parse_range_header(h2o_header_t *headers, size_t num_headers, size_t 
      * See the syntax of HTTP |content-Range| header at
      * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Range
      */
-    static h2o_iovec_t content_range_str=(h2o_iovec_t){H2O_STRLIT("Content-Range")};
+    static h2o_iovec_t content_range_str=(h2o_iovec_t){H2O_STRLIT("content-range")};
 
     for(size_t i = 0; i != num_headers; i++){
         const char *name = headers[i].orig_name;
@@ -148,7 +151,16 @@ static int parse_range_header(h2o_header_t *headers, size_t num_headers, size_t 
             return 0;
         }
     }
-    h2o_error_printf("Can't find Content-Range header!");
+    h2o_error_printf("Can't find Content-Range header. The headers are following:\n");
+    for (size_t i = 0; i != num_headers; ++i) {
+        const char *name = headers[i].orig_name;
+        if (name == NULL)
+            name = headers[i].name->base;
+        fprintf(stderr, "%.*s: %.*s\n", (int)headers[i].name->len, name, (int)headers[i].value.len, headers[i].value.base);
+    }
+    fprintf(stderr, "\n");
+    fflush(stderr);
+
     return -1;
 }
 
@@ -156,18 +168,22 @@ static h2o_httpclient_body_cb
 on_head(h2o_httpclient_t *htttpclient, const char *errstr, int version, int status, h2o_iovec_t msg,
         h2o_header_t *headers, size_t num_headers, int header_requires_dup){
     if (errstr != NULL && errstr != h2o_httpclient_error_is_eos) {
-        h2o_error_printf("|On head error: %s\n",errstr);
+
+        h2o_error_printf("On head error: %s\n",errstr);
         return NULL;
     }
-    print_status_line(version, status, msg);
+
+//  print_status_line(version, status, msg);
     h2o_rangeclient_t *ra = htttpclient->data;
 
      if(ra->range.end==0){
          size_t file_size;
          if(parse_range_header(headers, num_headers, &file_size)==0){
              ra->range.end = file_size;
-             if(ra->cb.on_get_size!=NULL)
+             if(ra->cb.on_get_size!=NULL) {
                  ra->cb.on_get_size();
+                 ra->cb.on_get_size = NULL;
+             }
          }
     }
 
@@ -190,7 +206,7 @@ on_connect(h2o_httpclient_t *httpclient, const char *errstr, h2o_iovec_t *_metho
         return NULL;
     }
 
-    h2o_rangeclient_t *ra = (h2o_rangeclient_t*)httpclient->data;
+    h2o_rangeclient_t *ra = httpclient->data;
 
     *_method = h2o_iovec_init(H2O_STRLIT("GET"));
     *url = *ra->url_parsed;
@@ -198,15 +214,17 @@ on_connect(h2o_httpclient_t *httpclient, const char *errstr, h2o_iovec_t *_metho
     *proceed_req_cb = NULL;
 
 
+    h2o_mem__set_secure(ra->buf, 0, 256);
     size_t buf_len;
     if(ra->range.end > 0){
         buf_len = snprintf(ra->buf, 256, "bytes=%zu-%zu",
                 ra->range.begin, ra->range.end-1);
-    }else{
+    }else {
         buf_len = snprintf(ra->buf, 256, "bytes=%zu-",
-                ra->range.begin);
+                           ra->range.begin);
     }
 
+    h2o_mem_set_secure(ra->range_header, 0, sizeof(h2o_header_t));
     ra->range_header->name = &range_str;
     ra->range_header->value = h2o_iovec_init(ra->buf, buf_len);
 
@@ -224,7 +242,10 @@ h2o_rangeclient_create(
         char *save_to_file,
         h2o_url_t *target,
         size_t bytes_begin,
-        size_t bytes_end
+        size_t bytes_end,
+        on_complete_cb_t on_complete,
+        on_get_size_cb_t on_get_size,
+        on_buffer_consume_cb_t on_buffer_consume
         ){
     h2o_rangeclient_t *ra = h2o_mem_alloc(sizeof(h2o_rangeclient_t));
 
@@ -235,11 +256,16 @@ h2o_rangeclient_create(
     ra->data = data;
 
     ra->save_to_file = h2o_mem_alloc(strlen(save_to_file) + 1);
+    h2o_mem__set_secure(ra->save_to_file, 0, strlen(save_to_file) + 1);
     memcpy(ra->save_to_file, save_to_file, strlen(save_to_file));
 
     ra->range.begin = bytes_begin;
     ra->range.end = bytes_end;
     ra->range.received = 0;
+
+    ra->cb.on_get_size =on_get_size;
+    ra->cb.on_buffer_consume = on_buffer_consume;
+    ra->cb.on_complete = on_complete;
 
     if(bytes_end > 0)
         assert(bytes_begin < bytes_end);
@@ -258,7 +284,7 @@ h2o_rangeclient_create(
     if(ra->fd < 0){
         h2o_fatal("fail to open %s: %s\n", save_to_file, strerror(errno));
     }
-    if(lseek(ra->fd, bytes_begin, SEEK_SET) < 0){
+    if(lseek(ra->fd, bytes_begin, SEEK_SET) < 0) {
         h2o_fatal("fd(%d) fail to lseek %s:\n", ra->fd, save_to_file);
     }
 

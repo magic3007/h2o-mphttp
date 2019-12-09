@@ -9,6 +9,37 @@
 
 #define IO_TIMEOUT 10 * 1000 /* 10s */
 
+static FILE *keylog_file_fp;
+
+typedef void (*SSL_CTX_keylog_cb_func)(const SSL *ssl, const char *line);
+
+static void ossl_keylog_callback(const SSL *ssl, const char *line){
+  (void)ssl;
+
+  /* Using fputs here instead of fprintf since libcurl's fprintf replacement
+     may not be thread-safe. */
+  if(keylog_file_fp && line && *line) {
+    char stackbuf[256];
+    char *buf;
+    size_t linelen = strlen(line);
+
+    if(linelen <= sizeof(stackbuf) - 2)
+      buf = stackbuf;
+    else {
+      buf = malloc(linelen + 2);
+      if(!buf)
+        return;
+    }
+    memcpy(buf, line, linelen);
+    buf[linelen] = '\n';
+    buf[linelen + 1] = '\0';
+
+    fputs(buf, keylog_file_fp);
+    if(buf != stackbuf)
+      free(buf);
+  }
+}
+
 static void usage(const char *progname){
     fprintf(stderr,
             "Usage: %s <host#1> <host#2> <host#3> -t <path> -o <file>\n",
@@ -78,6 +109,7 @@ int main(int argc, char **argv){
     SSL_load_error_strings();
     SSL_library_init();
     OpenSSL_add_all_algorithms();
+    keylog_file_fp = fopen("./ssl_keylog", "w");
 
     /* setup context */
     h2o_multithread_queue_t *queue;
@@ -92,19 +124,22 @@ int main(int argc, char **argv){
         IO_TIMEOUT,                              /* keepalive_timeout */
         H2O_SOCKET_INITIAL_INPUT_BUFFER_SIZE * 2 /* max_buffer_size */
     };
-    ctx.http2.ratio = 100;
+    ctx.http2.ratio = 0;
     ctx.loop = h2o_evloop_create();
     queue = h2o_multithread_create_queue(ctx.loop);
     h2o_multithread_register_receiver(queue, ctx.getaddr_receiver, h2o_hostinfo_getaddr_receiver);
 
     for(int i = 0; i < 3; i++)
-        interface[i] = h2o_mpclient_create(cdns[i], &ctx, on_get_size, get_slowest_interface, /* ssl_verify_none */1);
+        interface[i] = h2o_mpclient_create(cdns[i], &ctx, on_get_size,
+                get_slowest_interface, /* ssl_verify_none */1);
 
     h2o_mpclient_fetch(interface[0], path_of_url, save_to_file, 0, 0);
 
     while(!is_complete()){
         h2o_evloop_run(ctx.loop, 1000);
     }
+
+    fclose(keylog_file_fp);
 
     return 0;
 }
