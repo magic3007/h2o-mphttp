@@ -1,0 +1,12 @@
+user: root
+hosts:
+  "localhost":
+    listen:
+      port: 80
+
+    paths:
+      "/":
+        file.dir: ./chunk
+access-log: ./access-log
+error-log: ./error-log
+#pid-file: ./pid-file

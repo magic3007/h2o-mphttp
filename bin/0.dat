@@ -1,0 +1,8 @@
+38 ms: mpclient(0): 0 - 8191
+39 ms: mpclient(0): 8192 - 16383
+41 ms: mpclient(0): 16384 - 24575
+44 ms: mpclient(0): 24576 - 25599
+53 ms: mpclient(0): 76800 - 84991
+53 ms: mpclient(0): 84992 - 88491
+62 ms: mpclient(0): 100698 - 102399
+67 ms: mpclient(0): 99763 - 100697
