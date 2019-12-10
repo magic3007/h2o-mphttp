@@ -124,7 +124,7 @@ int main(int argc, char **argv){
         IO_TIMEOUT,                              /* keepalive_timeout */
         H2O_SOCKET_INITIAL_INPUT_BUFFER_SIZE * 2 /* max_buffer_size */
     };
-    ctx.http2.ratio = 0;
+    ctx.http2.ratio = 100;
     ctx.loop = h2o_evloop_create();
     queue = h2o_multithread_create_queue(ctx.loop);
     h2o_multithread_register_receiver(queue, ctx.getaddr_receiver, h2o_hostinfo_getaddr_receiver);

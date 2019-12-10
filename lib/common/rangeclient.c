@@ -34,8 +34,11 @@ void h2o_rangeclient_adjust_range_end(h2o_rangeclient_t *ra, size_t end) {
   assert(end > ra->range.begin);
   if (end < ra->range.begin + ra->range.received) {
     h2o_error_printf("warning: overwrite existing content. cancel the stream now\n");
-    h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
+    if(!h2o_timer_is_linked(&ra->cancel_timer))
+        h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
   } else {
+      if(end < ra->range.end)
+          ra->enable_cancel = 1;
       ra->range.end = end;
   }
 }
@@ -74,7 +77,7 @@ static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *
         h2o_fatal("writen error: %s", strerror(errno));
     ra->cb.on_buffer_consume(ra->data, ra->range.begin, ra->range.begin + consume -1);
     ra->range.begin += consume;
-    if(cancel && !h2o_timer_is_linked(&ra->cancel_timer))
+    if(ra->enable_cancel && cancel && !h2o_timer_is_linked(&ra->cancel_timer))
         h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
 }
 
@@ -103,7 +106,6 @@ static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler, siz
 
 static void cancel_stream_cb(h2o_timer_t *timer) {
   h2o_rangeclient_t *client = H2O_STRUCT_FROM_MEMBER(h2o_rangeclient_t, cancel_timer, timer);
-  fprintf(stdout, "cancel_stream");
   client->httpclient->cancel(client->httpclient);
   close(client->fd);
   client->is_closed = 1;
@@ -179,6 +181,7 @@ on_head(h2o_httpclient_t *htttpclient, const char *errstr, int version, int stat
      if(ra->range.end==0){
          size_t file_size;
          if(parse_range_header(headers, num_headers, &file_size)==0){
+             fprintf(stdout, "File range: %zu-%zu\n", 0, file_size-1);
              ra->range.end = file_size;
              if(ra->cb.on_get_size!=NULL) {
                  ra->cb.on_get_size();
@@ -293,6 +296,7 @@ h2o_rangeclient_create(
     h2o_timer_init(&ra->cancel_timer, cancel_stream_cb);
 
     ra->is_closed = 0;
+    ra->enable_cancel = 0;
     h2o_httpclient_connect(&ra->httpclient, ra->pool, ra, ctx, connpool, target, on_connect);
     return ra;
 }

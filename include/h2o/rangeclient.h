@@ -43,6 +43,7 @@ struct st_h2o_rangeclient_t{
     h2o_timer_t cancel_timer;
     bandwidth_sample_t bw_sampler;
 
+    int enable_cancel;
     int is_closed;
 
     struct{

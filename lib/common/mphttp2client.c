@@ -5,10 +5,10 @@ static uint64_t time_start_tick = 0; // us
 
 static void h2o_mpclient_add_log(void *data, size_t begin, size_t end){
     h2o_mphttp2client_t *mp = data;
-    fprintf(mp->log_file, "%zu us: Interface(%d): %zu - %zu\n",
+    fprintf(mp->log_file, "%zu us: mpclient(%d): %zu - %zu\n",
             h2o_now(mp->ctx->loop)  - time_start_tick,
             mp->ID, begin, end);
-    fprintf(stdout, "%zu us: Interface(%d): %zu - %zu\n",
+    fprintf(stdout, "%zu us: mpclient(%d): %zu - %zu\n",
         (h2o_now(mp->ctx->loop)  - time_start_tick),
         mp->ID, begin, end);
     fflush(stdout);
@@ -154,6 +154,7 @@ static int on_complete(h2o_rangeclient_t *ra){
     }
     h2o_rangeclient_destroy(ra);
     h2o_mpclient_update(mp);
+    h2o_mpclient_reschedule(mp);
     return 0;
 }
 
@@ -204,8 +205,13 @@ int h2o_mpclient_reschedule(h2o_mphttp2client_t *mp_idle){
     size_t bw_busy = h2o_mpclient_get_bw(mp_busy);
 
     size_t idle_len = (uint64_t) remain * bw_idle / (bw_idle + bw_busy);
+
+    if(idle_len <= 64 * 1024 /* 64KB */)
+        return 0;
+
     size_t idle_end = ra_busy->range.end;
     size_t idle_begin = idle_end - idle_len;
+
     h2o_rangeclient_adjust_range_end(ra_busy, idle_begin);
 
     assert(mp_idle->rangeclients.running == NULL);
@@ -218,7 +224,7 @@ int h2o_mpclient_reschedule(h2o_mphttp2client_t *mp_idle){
             h2o_mpclient_add_log
             );
 
-    fprintf(stdout, "reschedule: Interface(%d):%zu-%zu Interface(%d):%zu-%zu\n",
+    fprintf(stdout, "reschedule: \n\tmpclient(%d):%zu-%zu \n\tmpclient(%d):%zu-%zu\n",
             mp_idle->ID, idle_begin, idle_end - 1,
             mp_busy->ID, ra_busy->range.begin, ra_busy->range.end - 1);
     fflush(stdout);
