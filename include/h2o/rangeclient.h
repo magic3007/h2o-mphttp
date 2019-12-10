@@ -13,6 +13,7 @@ typedef struct st_bandwidth_sampler_t bandwidth_sample_t;
 
 typedef int (*on_get_size_cb_t)();
 typedef int (*on_complete_cb_t)(h2o_rangeclient_t *);
+typedef int (*on_almost_complete_cb_t)(h2o_rangeclient_t *);
 typedef void (*on_buffer_consume_cb_t)(void*, size_t, size_t);
 
 struct st_bandwidth_sampler_t{
@@ -45,9 +46,11 @@ struct st_h2o_rangeclient_t{
     bandwidth_sample_t bw_sampler;
 
     int is_closed;
+    int is_almost_complete;
 
     struct{
         on_complete_cb_t on_complete;
+        on_almost_complete_cb_t on_almost_complete;
         on_get_size_cb_t on_get_size;
         on_buffer_consume_cb_t on_buffer_consume;
     }cb;
@@ -62,6 +65,7 @@ h2o_rangeclient_t *h2o_rangeclient_create(
         size_t bytes_begin,
         size_t bytes_end,
         on_complete_cb_t on_complete,
+        on_almost_complete_cb_t on_almost_complete,
         on_get_size_cb_t on_get_size,
         on_buffer_consume_cb_t on_buffer_consume,
         int mpclientID
@@ -73,7 +77,7 @@ void h2o_rangeclient_adjust_range_end(h2o_rangeclient_t *ra, size_t end);
 size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra); // Bytes/s
 uint64_t h2o_rangeclient_get_rtt(h2o_rangeclient_t *ra); // us
 size_t h2o_rangeclient_get_remain(h2o_rangeclient_t *ra); // Bytes
-uint32_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra); // ms
+uint64_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra); // us
 
 #ifdef __cplusplus
 }

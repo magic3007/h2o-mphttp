@@ -128,7 +128,7 @@ int main(int argc, char **argv){
         IO_TIMEOUT,                              /* first_byte_timeout */
         NULL,                                    /* websocket_timeout */
         IO_TIMEOUT,                              /* keepalive_timeout */
-        H2O_SOCKET_INITIAL_INPUT_BUFFER_SIZE * 2 /* max_buffer_size */
+        65536                               /* max_buffer_size */
     };
     ctx.http2.ratio = 100;
     ctx.loop = h2o_evloop_create();
@@ -144,6 +144,10 @@ int main(int argc, char **argv){
     while(!is_complete()){
         h2o_evloop_run(ctx.loop, 1000);
     }
+
+    for(int i = 0; i < 3; i++)
+        if(interface[i]->log_file)
+            fclose(interface[i]->log_file);
 
 //    fclose(keylog_file_fp);
 

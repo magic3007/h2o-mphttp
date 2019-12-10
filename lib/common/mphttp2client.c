@@ -12,8 +12,8 @@ static void h2o_mpclient_add_log(void *data, size_t begin, size_t end){
 //    fflush(mp->log_file);
     fprintf(mp->log_file, "%zu %zu\n",
             h2o_now(mp->ctx->loop)  - time_start_tick,
-            (end + begin) >> 1);
-    fflush(mp->log_file);
+            /* Kb */((end + begin) >> 1)/1024);
+//    fflush(mp->log_file);
     fprintf(stderr, "%zu ms: mpclient(%d): %zu - %zu, bw = %zu KB/s\n",
         (h2o_now(mp->ctx->loop)  - time_start_tick),
         mp->ID, begin, end, h2o_mpclient_get_bw(mp) / 1024);
@@ -146,13 +146,22 @@ uint32_t h2o_mpclient_get_remain(h2o_mphttp2client_t *mp){
 }
 
 
+static int on_almost_complete(h2o_rangeclient_t *ra){
+    h2o_mphttp2client_t *mp = (h2o_mphttp2client_t*)ra->data;
+    h2o_mpclient_update(mp);
+    if (mp->rangeclients.pending != NULL)
+        return 0;
+    h2o_mpclient_reschedule(mp);
+    return 0;
+}
 
 static int on_complete(h2o_rangeclient_t *ra){
     h2o_mphttp2client_t *mp = (h2o_mphttp2client_t*)ra->data;
-    fprintf(stderr,"%zu ms: mpclient(%d) on complete\n",
+    fprintf(stderr,"%zu ms: mpclient(%d) %p on complete\n",
             h2o_now(ra->ctx->loop) - time_start_tick,
-            mp->ID);
+            mp->ID, ra);
     assert(ra->is_closed);
+    assert(mp->rangeclients.running != mp->rangeclients.pending);
     if (ra == mp->rangeclients.running) {
         mp->rangeclients.running = NULL;
     } else if (ra == mp->rangeclients.pending) {
@@ -162,7 +171,6 @@ static int on_complete(h2o_rangeclient_t *ra){
     }
     h2o_rangeclient_destroy(ra);
     h2o_mpclient_update(mp);
-    h2o_mpclient_reschedule(mp);
     return 0;
 }
 
@@ -181,6 +189,7 @@ int h2o_mpclient_fetch(h2o_mphttp2client_t *mp, char *request_path,
                                                      &mp->url_parsed,
                                                      bytes_begin , bytes_end,
                                                      on_complete,
+                                                     on_almost_complete,
                                                      mp->on_get_size_cb,
                                                      h2o_mpclient_add_log,
                                                      mp->ID);
@@ -195,15 +204,16 @@ int h2o_mpclient_reschedule(h2o_mphttp2client_t *mp_idle){
     assert(mp_busy != mp_idle);
 
     h2o_mpclient_update(mp_idle);
+    h2o_mpclient_update(mp_busy);
 
     h2o_rangeclient_t *ra_busy = mp_busy->rangeclients.running;
 
     assert(ra_busy != NULL);
-    assert(mp_idle->rangeclients.running == NULL);
+    assert(mp_idle->rangeclients.pending == NULL);
 
     size_t remain = h2o_rangeclient_get_remain(ra_busy);
-    if( remain <= 1024 /* 1KB */) {
-        fprintf(stdout, "mpclient(%d): the remaining is less than 1KB. Don't need to reschedule.\n",mp_idle->ID);
+    if( remain <= 8 * 1024 ) {
+        fprintf(stdout, "mpclient(%d): Don't need to reschedule.\n",mp_idle->ID);
         return 0;
     }
 
@@ -233,19 +243,19 @@ int h2o_mpclient_reschedule(h2o_mphttp2client_t *mp_idle){
 
     h2o_rangeclient_adjust_range_end(ra_busy, idle_begin);
 
-    assert(mp_idle->rangeclients.running == NULL);
-
-    mp_idle->rangeclients.running = h2o_rangeclient_create(
+    mp_idle->rangeclients.pending = h2o_rangeclient_create(
             mp_idle->connpool, mp_idle, mp_idle->ctx, ra_busy->save_to_file, ra_busy->url_parsed,
             idle_begin, idle_end,
             on_complete,
+            on_almost_complete,
             NULL,
             h2o_mpclient_add_log,
             mp_idle->ID);
 
-    fprintf(stderr, "reschedule: \n\tmpclient(%d):%zu-%zu \n\tmpclient(%d):%zu-%zu\n",
-            mp_idle->ID, idle_begin, idle_end - 1,
-            mp_busy->ID, ra_busy->range.begin, ra_busy->range.end - 1);
+    fprintf(stderr, "reschedule: \n\tmpclient(%d) %p:%zu-%zu \n\t" \
+                    "mpclient(%d) %p:%zu-%zu\n",
+            mp_idle->ID, mp_idle->rangeclients.pending, idle_begin, idle_end - 1,
+            mp_busy->ID, ra_busy, ra_busy->range.begin, ra_busy->range.end - 1);
     h2o_mpclient_update(mp_idle);
     return 0;
 }
