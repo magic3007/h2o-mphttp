@@ -1,5 +1,5 @@
 set terminal png transparent enhanced font "arial,10" fontscale 1.0 size 600, 400
-set output 'plot/static_cond_20ms.png'
+set output 'plot/delay_2_20_20.png'
 set style increment default
 set style data lines
 set xlabel 'time elapsed (ms)'

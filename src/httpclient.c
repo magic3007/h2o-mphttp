@@ -437,7 +437,7 @@ int main(int argc, char **argv)
         } break;
         case 'i':
             delay_interval_ms = atoi(optarg);
-            break;
+        break;
         case 'k':
             ssl_verify_none = 1;
             break;

@@ -8,6 +8,7 @@
  */
 static h2o_iovec_t range_str=(h2o_iovec_t){H2O_STRLIT("range")};
 
+static size_t file_size = 0;
 
 size_t h2o_rangeclient_get_bw(h2o_rangeclient_t *ra){
    return ra->bw_sampler.bw;
@@ -19,7 +20,7 @@ uint64_t h2o_rangeclient_get_rtt(h2o_rangeclient_t *ra){
 
 size_t h2o_rangeclient_get_remain(h2o_rangeclient_t *ra){
     return ra->range.end == 0 ? 0
-        : ra->range.end - ra->range.begin - ra->range.received;
+        : ra->range.end - ra->range.begin;
 }
 
 uint64_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra){
@@ -30,18 +31,7 @@ uint64_t h2o_rangeclient_get_remaining_time(h2o_rangeclient_t *ra){
     return (uint64_t)remain * 1000000 / bw;  // us
 }
 
-void h2o_rangeclient_adjust_range_end(h2o_rangeclient_t *ra, size_t end) {
-  assert(end > ra->range.begin);
-  if(ra->range.end>0)
-      assert(end <= ra->range.end);
-  if (end < ra->range.begin + ra->range.received) {
-    h2o_error_printf("warning: overwrite existing content. cancel the stream now\n");
-    if(!h2o_timer_is_linked(&ra->cancel_timer))
-        h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
-  } else {
-      ra->range.end = end;
-  }
-}
+
 
 static void print_status_line(int version, int status, h2o_iovec_t msg){
     fprintf(stderr, "HTTP/%d", (version >> 8));
@@ -68,23 +58,6 @@ static int writen(int fd, void *ptr, size_t n){
     return cur;
 }
 
-static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *inbuf, int enable_cancel){
-    size_t remain = h2o_rangeclient_get_remain(ra);
-    size_t consume = inbuf->size;
-    int cancel = consume >= remain;
-    if(cancel) consume = remain;
-     fprintf(stderr, "mpclient(%d) %p buffer_consume\n", ra->mpclientID, ra);
-    if(writen(ra->fd, inbuf->bytes, consume)<0)
-        h2o_fatal("writen error: %s", strerror(errno));
-    ra->cb.on_buffer_consume(ra->data, ra->range.begin, ra->range.begin + consume -1);
-    ra->range.begin += consume;
-    if(enable_cancel && cancel && !h2o_timer_is_linked(&ra->cancel_timer)){
-        assert(enable_cancel);
-        fprintf(stderr, "mpclient(%d) %p register timer\n", ra->mpclientID, ra);
-        h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
-    }
-
-}
 
 
 static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler,
@@ -113,13 +86,57 @@ static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler,
 }
 
 
+// cancel stream later
 static void cancel_stream_cb(h2o_timer_t *timer) {
     h2o_rangeclient_t *client = H2O_STRUCT_FROM_MEMBER(h2o_rangeclient_t, cancel_timer, timer);
-    fprintf(stderr, "mpclient(%d) %p: cancel stream\n", client->mpclientID, client);
+    fprintf(stderr, "mpclient(%d) %p: cancel stream by callback\n", client->mpclientID, client);
+    if(client->is_closed) {
+        fprintf(stderr, "mpclient(%d) %p: has been cancel.\n", client->mpclientID, client);
+        return;
+    }
+    client->is_closed = 1;
     client->httpclient->cancel(client->httpclient);
     close(client->fd);
-    client->is_closed = 1;
     client->cb.on_complete(client);
+}
+
+// cancel stream immediately
+//static void cancel_stream(h2o_rangeclient_t *client) {
+//    fprintf(stderr, "mpclient(%d) %p: actively cancel stream\n", client->mpclientID, client);
+//    if(client->is_closed) {
+//        fprintf(stderr, "mpclient(%d) %p: has been cancel.\n", client->mpclientID, client);
+//        return;
+//    }
+//    client->is_closed = 1;
+//    client->httpclient->cancel(client->httpclient);
+//    close(client->fd);
+//    client->cb.on_complete(client);
+//}
+
+
+static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *inbuf){
+    size_t remain = h2o_rangeclient_get_remain(ra);
+    size_t consume = inbuf->size;
+    int cancel = consume >= remain;
+    if(cancel) consume = remain;
+     fprintf(stderr, "mpclient(%d) %p buffer_consume\n", ra->mpclientID, ra);
+    if(writen(ra->fd, inbuf->bytes, consume)<0)
+        h2o_fatal("writen error: %s", strerror(errno));
+    ra->cb.on_buffer_consume(ra->data, ra->range.begin, ra->range.begin + consume -1);
+    ra->range.begin += consume;
+}
+
+void h2o_rangeclient_adjust_range_end(h2o_rangeclient_t *ra, size_t end) {
+  assert(end > ra->range.begin);
+  if(ra->range.end>0)
+      assert(end <= ra->range.end);
+  ra->range.end = end;
+//  if (end < ra->range.begin + ra->range.received) {
+//        h2o_error_printf("warning: overwrite existing content. cancel the stream latter.\n");
+//        h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
+//  } else {
+//      ra->range.end = end;
+//  }
 }
 
 static int on_body(h2o_httpclient_t *httpclient, const char *errstr){
@@ -131,29 +148,18 @@ static int on_body(h2o_httpclient_t *httpclient, const char *errstr){
 
     h2o_rangeclient_t *ra = httpclient->data;
 
+    int is_eos = errstr == h2o_httpclient_error_is_eos;
 
     h2o_rangeclient_bandwidth_update(&ra->bw_sampler, (*httpclient->buf)->size,
             /* ns */h2o_now_nanosec(ra->ctx->loop));
 
-    int enable_cancel = errstr != h2o_httpclient_error_is_eos;
+    h2o_rangeclient_buffer_consume(ra, *httpclient->buf);
 
-    h2o_rangeclient_buffer_consume(ra, *httpclient->buf, enable_cancel);
     size_t consume = (*httpclient->buf)->size;
+    size_t remain = h2o_rangeclient_get_remain(ra);
+
     h2o_buffer_consume(&(*httpclient->buf), (*httpclient->buf)->size);
 
-    if(!enable_cancel){
-        fprintf(stderr, "mpclient(%d) %p: done.\n",
-                ra->mpclientID, ra, enable_cancel);
-        close(ra->fd);
-        ra->is_closed = 1;
-        ra->cb.on_complete(ra);
-        return 0;
-    }
-
-//    uint64_t remain_time_us = (uint64_t)h2o_rangeclient_get_remaining_time(ra);
-//    uint64_t rtt_us = h2o_rangeclient_get_rtt(ra);
-
-    size_t remain = h2o_rangeclient_get_remain(ra);
     if (remain <= consume) {
         if (ra->cb.on_almost_complete != NULL) {
             fprintf(stderr, "mpclient(%d) %p: almost complete. \n",
@@ -162,6 +168,24 @@ static int on_body(h2o_httpclient_t *httpclient, const char *errstr){
             ra->cb.on_almost_complete = NULL;
         }
     }
+
+    if(remain == 0 && !is_eos) {
+        if(!h2o_timer_is_linked(&ra->cancel_timer))
+            h2o_timer_link(ra->ctx->loop, 0, &ra->cancel_timer);
+    }
+
+
+    if(is_eos){
+        fprintf(stderr, "mpclient(%d) %p: done.\n",
+                ra->mpclientID, ra);
+        if(!ra->is_closed){
+            ra->is_closed = 1;
+            close(ra->fd);
+            ra->cb.on_complete(ra);
+        }
+        return 0;
+    }
+
 
     return 0;
 }
@@ -211,10 +235,10 @@ on_head(h2o_httpclient_t *htttpclient, const char *errstr, int version, int stat
     h2o_rangeclient_t *ra = htttpclient->data;
 
      if(ra->range.end==0){
-         size_t file_size;
          if(parse_range_header(headers, num_headers, &file_size)==0){
              fprintf(stderr, "File range: %u-%zu\n", 0u, file_size-1);
              ra->range.end = file_size;
+             ra->range.origin_end = file_size;
              if(ra->cb.on_get_size!=NULL) {
                  ra->cb.on_get_size();
                  ra->cb.on_get_size = NULL;
@@ -298,7 +322,8 @@ h2o_rangeclient_create(
 
     ra->range.begin = bytes_begin;
     ra->range.end = bytes_end;
-    ra->range.received = 0;
+    ra->range.origin_end = bytes_end;
+    ra->range.origin_begin = bytes_begin;
 
     ra->cb.on_get_size =on_get_size;
     ra->cb.on_buffer_consume = on_buffer_consume;
@@ -337,7 +362,6 @@ h2o_rangeclient_create(
     ra->bw_sampler.last_receive_time = 0;
 
     ra->is_closed = 0;
-    ra->is_almost_complete = 0;
 
     h2o_httpclient_connect(&ra->httpclient, ra->pool, ra, ctx, connpool, target, on_connect);
     return ra;

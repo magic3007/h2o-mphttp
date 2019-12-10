@@ -36,7 +36,8 @@ struct st_h2o_rangeclient_t{
     struct{
         size_t begin;
         size_t end;
-        size_t received;
+        size_t origin_begin;
+        size_t origin_end;
     }range;
 
     int fd;
@@ -46,7 +47,6 @@ struct st_h2o_rangeclient_t{
     bandwidth_sample_t bw_sampler;
 
     int is_closed;
-    int is_almost_complete;
 
     struct{
         on_complete_cb_t on_complete;
