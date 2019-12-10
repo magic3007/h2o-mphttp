@@ -41,7 +41,8 @@ h2o_mpclient_create(char *host_address,
         h2o_httpclient_ctx_t *ctx,
         on_get_size_cb_t on_get_size_cb,
         on_reschedule_cb_t on_reschedule_cb,
-        int ssl_verify_none);
+        int ssl_verify_none,
+        char *log_dir);
 
 size_t h2o_mpclient_get_bw(h2o_mphttp2client_t *mp);
 uint64_t h2o_mpclient_get_rtt(h2o_mphttp2client_t *mp); // us

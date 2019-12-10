@@ -1,13 +1,18 @@
 #include <h2o/mphttp2client.h>
 #include <h2o/rangeclient.h>
 
-static uint64_t time_start_tick = 0; // us
+static uint64_t time_start_tick = 0; // ms
 
 static void h2o_mpclient_add_log(void *data, size_t begin, size_t end){
     h2o_mphttp2client_t *mp = data;
-    fprintf(mp->log_file, "%zu ms: mpclient(%d): %zu - %zu\n",
+    if(mp->log_file == NULL) return;
+//    fprintf(mp->log_file, "%zu ms: mpclient(%d): %zu - %zu\n",
+//            h2o_now(mp->ctx->loop)  - time_start_tick,
+//            mp->ID, begin, end);
+//    fflush(mp->log_file);
+    fprintf(mp->log_file, "%zu %zu\n",
             h2o_now(mp->ctx->loop)  - time_start_tick,
-            mp->ID, begin, end);
+            (end + begin) >> 1);
     fflush(mp->log_file);
     fprintf(stderr, "%zu ms: mpclient(%d): %zu - %zu, bw = %zu KB/s\n",
         (h2o_now(mp->ctx->loop)  - time_start_tick),
@@ -19,25 +24,31 @@ h2o_mpclient_create(char *host_address,
         h2o_httpclient_ctx_t *ctx,
         on_get_size_cb_t on_get_size_cb,
         on_reschedule_cb_t on_reschedule_cb,
-        int ssl_verify_none){
+        int ssl_verify_none,
+        char *log_dir) {
 
     // allocate memory on stack
     char request_url[512];
     h2o_url_t url_parsed;
-    snprintf(request_url, 512,"%s%s", "https://", host_address);
+    snprintf(request_url, 512, "%s%s", "https://", host_address);
 
-    if(h2o_url_parse(request_url, SIZE_MAX, &url_parsed) != 0 )
+    if (h2o_url_parse(request_url, SIZE_MAX, &url_parsed) != 0)
         h2o_fatal("unrecognized type of URL: %s", request_url);
 
-    h2o_mphttp2client_t * mp = h2o_mem_alloc(sizeof(h2o_mphttp2client_t));
+    h2o_mphttp2client_t *mp = h2o_mem_alloc(sizeof(h2o_mphttp2client_t));
     h2o_mem_set_secure(mp, 0, sizeof(h2o_mphttp2client_t));
 
     char buf[32];
     static int log_cnt = 0;
     mp->ID = log_cnt++;
-    snprintf(buf, 32, "%d.dat", mp->ID);
-    if((mp->log_file = fopen(buf, "w")) == NULL)
-        h2o_fatal("fopen error: %s", strerror(errno));
+    if (log_dir != NULL) {
+        snprintf(buf, 32, "%s/%d.dat", log_dir, mp->ID);
+        if ((mp->log_file = fopen(buf, "w")) == NULL)
+            h2o_fatal("fopen %s error: %s", buf, strerror(errno));
+    } else{
+        mp->log_file = NULL;
+    }
+
 
     mp->pool = h2o_mem_alloc(sizeof(h2o_mem_pool_t));
     h2o_mem_init_pool(mp->pool);

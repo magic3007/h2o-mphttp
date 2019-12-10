@@ -42,7 +42,8 @@ static void ossl_keylog_callback(const SSL *ssl, const char *line){
 
 static void usage(const char *progname){
     fprintf(stderr,
-            "Usage: %s <host#1> <host#2> <host#3> -t <path> -o <file>\n",
+            "Usage: %s <host#1> <host#2> <host#3> -t <path> -o <file> " \
+       "[-d<log directory>]\n",
             progname);
 }
 
@@ -77,6 +78,7 @@ int main(int argc, char **argv){
     int opt;
     char *save_to_file = NULL;
     char *path_of_url = NULL;
+    char *log_dir = NULL;
 
     char *cdns[3];
     int num_cdns = 0;
@@ -84,7 +86,7 @@ int main(int argc, char **argv){
     /* If the first character of optstring is '-', then each nonoption argv-element is
      * handled as if it were the argument of an option with character code 1.
      */
-    while((opt = getopt(argc, argv, "-o:t:"))!= -1){
+    while((opt = getopt(argc, argv, "-o:t:d::"))!= -1){
         switch (opt){
             case 1:
                 cdns[num_cdns++] = optarg;
@@ -94,6 +96,9 @@ int main(int argc, char **argv){
                 break;
             case 't':
                 path_of_url = optarg;
+                break;
+            case 'd':
+                log_dir = optarg;
                 break;
             default:
                 usage(argv[0]);
@@ -132,7 +137,7 @@ int main(int argc, char **argv){
 
     for(int i = 0; i < 3; i++)
         interface[i] = h2o_mpclient_create(cdns[i], &ctx, on_get_size,
-                get_slowest_interface, /* ssl_verify_none */1);
+                get_slowest_interface, /* ssl_verify_none */1, log_dir);
 
     h2o_mpclient_fetch(interface[0], path_of_url, save_to_file, 0, 0);
 
