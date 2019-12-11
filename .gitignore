@@ -18,3 +18,5 @@ tmp/
 include/h2o/gitrev.h
 .idea
 /fuzz
+/deps/
+/t/
