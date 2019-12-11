@@ -157,9 +157,9 @@ static int on_almost_complete(h2o_rangeclient_t *ra){
 
 static int on_complete(h2o_rangeclient_t *ra){
     h2o_mphttp2client_t *mp = (h2o_mphttp2client_t*)ra->data;
-    fprintf(stderr,"%zu ms: mpclient(%d) %p on complete\n",
-            h2o_now(ra->ctx->loop) - time_start_tick,
-            mp->ID, ra);
+//    fprintf(stderr,"%zu ms: mpclient(%d) %p on complete\n",
+//            h2o_now(ra->ctx->loop) - time_start_tick,
+//            mp->ID, ra);
     assert(ra->is_closed);
     assert(mp->rangeclients.running != mp->rangeclients.pending);
     if (ra == mp->rangeclients.running) {

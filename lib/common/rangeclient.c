@@ -89,7 +89,7 @@ static void h2o_rangeclient_bandwidth_update(bandwidth_sample_t *bw_sampler,
 // cancel stream later
 static void cancel_stream_cb(h2o_timer_t *timer) {
     h2o_rangeclient_t *client = H2O_STRUCT_FROM_MEMBER(h2o_rangeclient_t, cancel_timer, timer);
-    fprintf(stderr, "mpclient(%d) %p: cancel stream by callback\n", client->mpclientID, client);
+//    fprintf(stderr, "mpclient(%d) %p: cancel stream by callback\n", client->mpclientID, client);
     if(client->is_closed) {
         fprintf(stderr, "mpclient(%d) %p: has been cancel.\n", client->mpclientID, client);
         return;
@@ -119,7 +119,7 @@ static void h2o_rangeclient_buffer_consume(h2o_rangeclient_t *ra, h2o_buffer_t *
     size_t consume = inbuf->size;
     int cancel = consume >= remain;
     if(cancel) consume = remain;
-     fprintf(stderr, "mpclient(%d) %p buffer_consume\n", ra->mpclientID, ra);
+//     fprintf(stderr, "mpclient(%d) %p buffer_consume\n", ra->mpclientID, ra);
     if(writen(ra->fd, inbuf->bytes, consume)<0)
         h2o_fatal("writen error: %s", strerror(errno));
     ra->cb.on_buffer_consume(ra->data, ra->range.begin, ra->range.begin + consume -1);
@@ -162,8 +162,8 @@ static int on_body(h2o_httpclient_t *httpclient, const char *errstr){
 
     if (remain <= consume) {
         if (ra->cb.on_almost_complete != NULL) {
-            fprintf(stderr, "mpclient(%d) %p: almost complete. \n",
-                    ra->mpclientID, ra);
+//            fprintf(stderr, "mpclient(%d) %p: almost complete. \n",
+//                    ra->mpclientID, ra);
             ra->cb.on_almost_complete(ra);
             ra->cb.on_almost_complete = NULL;
         }
@@ -176,8 +176,8 @@ static int on_body(h2o_httpclient_t *httpclient, const char *errstr){
 
 
     if(is_eos){
-        fprintf(stderr, "mpclient(%d) %p: done.\n",
-                ra->mpclientID, ra);
+//        fprintf(stderr, "mpclient(%d) %p: done.\n",
+//                ra->mpclientID, ra);
         if(!ra->is_closed){
             ra->is_closed = 1;
             close(ra->fd);

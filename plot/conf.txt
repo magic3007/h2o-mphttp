@@ -1,0 +1,14 @@
+delay 20ms 6ms 20ms:
+sudo tc qdisc add dev veth0-1 root netem delay 10ms
+sudo tc qdisc add dev veth0-2 root netem delay 3ms
+sudo tc qdisc add dev veth0-3 root netem delay 10ms
+
+bw: 1mb 1mb 10mb:
+sudo tc qdisc add dev veth0-1 root tbf rate 1mbit burst 32kbit latency 50ms
+sudo tc qdisc add dev veth0-2 root tbf rate 1mbit burst 32kbit latency 50ms
+sudo tc qdisc add dev veth0-3 root tbf rate 10mbit burst 32kbit latency 50ms
+
+delay with noise 200ms 100ms 150ms:
+sudo tc qdisc add dev veth0-1 root netem delay 100ms 10ms 30%
+sudo tc qdisc add dev veth0-2 root netem delay 50ms 10ms 30%
+sudo tc qdisc add dev veth0-3 root netem delay 75ms 10ms 30%
